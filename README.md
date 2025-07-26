@@ -49,11 +49,11 @@ def identify_song(filename='snippet.wav'):
     return result['result'].get('title', '').strip()
 ```
 
-Audio recognition APIs, as it turns out, are surprisingly sensitive. If your file is even slightly too short, too long, or noisy, you’re out of luck. Fortunately, Audd.io did well, recognizing snippets from any part of even the most obscure Taylor Swift vault tracks. However, I would be surprised if it maintained this level of accuracy for non-Taylor Swift songs, which often sample other tracks.
+Audio recognition APIs, as it turns out, are surprisingly sensitive: if a file is even slightly too short, too long, or noisy, the software often proves futile. Fortunately, Audd.io did well, recognizing snippets from any part of even the most obscure Taylor Swift vault tracks.
 
 ## Answer Submission
 
-Swiftle doesn't have an API, and I didn't want to even attempt to reverse-engineer its frontend. So instead, I opted to use brute-force automation. The script needed to move the mouse to the search bar coordinates on my screen, click down, type the name of the song, and press Enter to submit. To determine the location of the search bar on my computer, I ran a separate program using PyAutoGUI. Once executed, the program waits three seconds for me to hover my cursor over Swiftle's search bar before printing the cursor's coordinates. Though I was unfamiliar with the package at the start of this project, it turned out to be relatively simple.
+Swiftle doesn't have an API, and I didn't want to even attempt to reverse-engineer its frontend. So instead, I opted to use brute-force automation. The script needed to move the mouse to the search bar coordinates on my screen, click down, type the name of the song, and press Enter to submit. To determine the location of the search bar on my computer, I ran a separate program using PyAutoGUI. Once executed, the program waits three seconds for me to hover my cursor over Swiftle's search bar before printing the cursor's coordinates. Though I was unfamiliar with the package at the start of this project, it turned out to be straightforward.
 
 ```python
 time.sleep(3)
@@ -87,6 +87,21 @@ def submit_song(song_title):
     '''
 ```
 
-_Note that the coordinates were hardcoded based on my screen layout. If you run this, you'll need to adjust them according to your device, which can be done using the coordinate identification method I mentioned earlier._
+## Future Improvements
 
+There’s a lot of room to build on this project, both in polish and in ambition. One improvement would be to transition from static recording to real-time or on-the-spot recognition; ideally, the system could start listening as soon as Swiftle plays and identify the track without needing to save a snippet. This could open the door to using speech-to-text or humming-based recognition, especially for games or variants where the snippet isn't cleanly isolated. Moreover, creating a Taylor Swift–specific database rather than querying against every song ever released would significantly speed up recognition and reduce false positives. 
+
+On a practical level, I’d like to add error handling, such as checking if the submitted answer matched the identified one, or retrying the request if the audio recognition API fails.
+While it currently works only with hardcoded screen positions, turning the whole thing into a GUI app with a start button and calibration step would make it easier to share.
+
+For now, the script functions well enough for it to beat the game. Which is good enough for me.
+
+## Closing Thoughts
+
+Coding has never been more than a hobby to me, and I've only taken one coding class throughout high school. But I've always found it extremely interesting because of the sheer breadth of areas it can be applied to. During the pandemic, coding was my solace, and much like Taylor Swift, I made many friends because of a shared interest in it. As I've gotten older, I've had less and less free time to pursue my ideas, so this was a much-needed re-entry back into the world of programming. It was also a chance to stitch together a few disparate pieces of knowledge: Python scripting, macOS automation, audio routing, and web APIs. I’ve always been a huge fan of applying programming to small personal quirks, dating back to middle school, when I coded a simulation for one of my favorite video games. I care about Taylor Swift trivia, and I care about automation. This project was a surprisingly elegant union of the two, and it really was something I'd dreamt of doing for a while, but never knew how to go about it.
+
+Also: it worked! I now beat my friends at Swiftle.
+
+
+**To see a screen recording of the full system in action, click [here](https://drive.google.com/file/d/1bM_AaMuAZHXNEoU8eTbdE9HFP9nqOzRr/view?usp=sharing).**
 
